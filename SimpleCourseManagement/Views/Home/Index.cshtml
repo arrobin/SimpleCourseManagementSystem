@@ -1,5 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    if (Session["UserDetailsId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    ViewBag.Title = "SCMS-Dashboard";
 }
 
 <div class="col-md-10">

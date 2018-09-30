@@ -1,33 +1,43 @@
 ﻿<div class="col-md-2">
-
     <div class="sidebar content-box" style="display: block;">
         <ul class="nav">
             <!-- Main menu -->
             <li class="current"><a href="#"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
-            <li class="submenu">
-                <a href="#">
-                    <i class="glyphicon glyphicon-list-alt"></i> Course
-                    <span class="caret pull-right"></span>
-                </a>
-                <!-- Sub menu -->
-                <ul>
-                    <li><a href="#"><i class=""></i>Course Add</a></li>
-                    <li><a href="#">Course List</a></li>
-                </ul>
-            </li>
-            <li class="submenu">
-                <a href="#">
-                    <i class="glyphicon glyphicon-th"></i> Batch
-                    <span class="caret pull-right"></span>
-                </a>
-                <!-- Sub menu -->
-                <ul>
-                    <li><a href="#">Batch Add</a></li>
-                    <li><a href="#">Batch List</a></li>
-                </ul>
-            </li>
-            <li><a href="#"><i class="glyphicon glyphicon-upload"></i> Result Add</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-list"></i> Trainee List</a></li>
+            @{
+                if ((int)Session["UserRoleId"] == 1)
+                {
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list-alt"></i> Course
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <!-- Sub menu -->
+                        <ul>
+                            <li><a href="#"><i class=""></i>Course Add</a></li>
+                            <li><a href="#">Course List</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-th"></i> Batch
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <!-- Sub menu -->
+                        <ul>
+                            <li><a href="#">Batch Add</a></li>
+                            <li><a href="#">Batch List</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#"><i class="glyphicon glyphicon-upload"></i> Result Add</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-list"></i> Trainee List</a></li>
+                }
+                else
+                {
+                    <li><a href="#"><i class="glyphicon glyphicon-list"></i> Registration</a></li>
+                }
+            }
+
+
 
         </ul>
     </div>
