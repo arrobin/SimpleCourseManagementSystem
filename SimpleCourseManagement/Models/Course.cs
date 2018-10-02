@@ -11,7 +11,8 @@ namespace SimpleCourseManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Course
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,9 @@ namespace SimpleCourseManagement.Models
         }
     
         public int CourseId { get; set; }
+        [Required]
         public string CourseCode { get; set; }
+        [Required]
         public string CourseName { get; set; }
         public bool IsActive { get; set; }
         public int UserDetailsId { get; set; }

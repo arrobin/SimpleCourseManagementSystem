@@ -1,0 +1,65 @@
+﻿@model SimpleCourseManagement.Models.Course
+
+@{
+    if (Session["UserDetailsId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    ViewBag.Title = "Add Course";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-10">
+        <div class="col-md-12 panel-info">
+            <div class="content-box-header panel-heading">
+                <div class="panel-title ">Add New Course</div>
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                    <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                </div>
+            </div>
+            <div class="content-box-large box-with-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.EditorFor(model => model.CourseCode, new { htmlAttributes = new { placeholder = "Course Code", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CourseCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { placeholder = "Course Name", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @*<div class="col-sm-offset-2 col-sm-10">*@
+                            <div class="checkbox">
+                                <label>
+                                    @Html.EditorFor(model => model.IsActive)Is Active
+                                </label>
+                                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                            </div>
+                    </div>
+                </div>
+                <label style="color:red" class="field-validation-error">@ViewBag.CodeExist</label>
+                <label style="color:red" class="field-validation-error">@ViewBag.Required</label>
+                <hr>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>*@
+        </div>
+    </div>
+
+}
