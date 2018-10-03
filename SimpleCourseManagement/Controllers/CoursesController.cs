@@ -54,7 +54,7 @@ namespace SimpleCourseManagement.Controllers
             {
                 if (string.IsNullOrEmpty(course.CourseCode) || string.IsNullOrEmpty(course.CourseName))
                 {
-                    ViewBag.Required = "Course Code & Course Nameis Required!!!";
+                    ViewBag.Required = "Course Code & Course Name is Required!!!";
                     return View();
                 }
                 if (db.Courses.ToList().Exists(a => a.CourseCode == course.CourseCode))
@@ -66,6 +66,8 @@ namespace SimpleCourseManagement.Controllers
                 course.CreatedDateTime = DateTime.Now;
                 db.Courses.Add(course);
                 db.SaveChanges();
+                ViewBag.Required = "";
+                ViewBag.CodeExist = "";
                 return RedirectToAction("Index");
             }
 
@@ -78,7 +80,8 @@ namespace SimpleCourseManagement.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Login");
             }
             Course course = db.Courses.Find(id);
             if (course == null)
@@ -94,16 +97,32 @@ namespace SimpleCourseManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseId,CourseCode,CourseName,IsActive,UserDetailsId,CreatedDateTime")] Course course)
+        public ActionResult Edit([Bind(Include = "CourseId,CourseCode,CourseName,IsActive,UserDetailsId,CreatedDateTime")] Course courseVM)
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(courseVM.CourseCode) || string.IsNullOrEmpty(courseVM.CourseName))
+                {
+                    ViewBag.Required = "Course Code & Course Name is Required!!!";
+                    return View();
+                }
+                if (db.Courses.ToList().Exists(a => a.CourseCode == courseVM.CourseCode && a.CourseId != courseVM.CourseId))
+                {
+                    ViewBag.CodeExist = "This Course Code Already Exist!!!";
+                    return View();
+                }
+                var course = db.Courses.FirstOrDefault(x => x.CourseId == courseVM.CourseId);
+                course.CourseCode = courseVM.CourseCode;
+                course.CourseName = courseVM.CourseName;
+                course.IsActive = courseVM.IsActive;
+                course.CreatedDateTime = DateTime.Now;
+                course.UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]);
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", course.UserDetailsId);
-            return View(course);
+            ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", courseVM.UserDetailsId);
+            return View(courseVM);
         }
 
         // GET: Courses/Delete/5

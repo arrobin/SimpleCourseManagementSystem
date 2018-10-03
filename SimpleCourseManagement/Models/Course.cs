@@ -20,7 +20,7 @@ namespace SimpleCourseManagement.Models
         {
             this.Batches = new HashSet<Batch>();
         }
-    
+
         public int CourseId { get; set; }
         [Required]
         public string CourseCode { get; set; }
