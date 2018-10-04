@@ -25,7 +25,7 @@ namespace SimpleCourseManagement.Models
         public int CourseId { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
-        public System.TimeSpan Time { get; set; }
+        public string Time { get; set; }
         public string Instructor { get; set; }
         public string CourseDetails { get; set; }
         public int Duration { get; set; }

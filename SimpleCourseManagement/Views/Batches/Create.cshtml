@@ -1,0 +1,77 @@
+﻿@model SimpleCourseManagement.Models.Batch
+
+@{
+    if (Session["UserDetailsId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    ViewBag.Title = "Create Batch";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-6">
+        <div class="content-box-large">
+            <div class="panel-heading">
+                <div class="panel-title">Batch Add</div>
+                <label style="color:red" class="field-validation-error">@ViewBag.CodeExist</label>
+                <label style="color:red" class="field-validation-error">@ViewBag.Required</label>
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                    <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <fieldset>
+                    <div class="form-group">
+                        <label>Batch Code</label>
+                        @Html.EditorFor(model => model.BatchCode, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.BatchCode, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Course Code</label>
+                        <select id="CourseId" name="CourseId" class="form-control"></select>
+                        @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" name="StartDate" value="" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" name="EndDate" value="" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Instructor</label>
+                        @Html.EditorFor(model => model.Instructor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Instructor, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Course Details</label>
+                        <textarea class="form-control" name="CourseDetails" placeholder="Textarea" rows="3"></textarea>
+                        @Html.ValidationMessageFor(model => model.CourseDetails, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Course Fee</label>
+                        @Html.EditorFor(model => model.CourseFee, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CourseFee, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Total Seat</label>
+                        @Html.EditorFor(model => model.TotalSeat, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TotalSeat, "", new { @class = "text-danger" })
+                    </div>
+                </fieldset>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

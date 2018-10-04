@@ -20,22 +20,11 @@ namespace SimpleCourseManagement.Controllers
             var courses = db.Courses.Include(c => c.UserDetail);
             return View(courses.ToList());
         }
-
-        // GET: Courses/Details/5
-        public ActionResult Details(int? id)
+        public JsonResult GetAllCourses()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
+            var courseList = db.Courses.Select(a => new { a.CourseId, a.CourseCode }).ToList();
+            return Json(courseList, JsonRequestBehavior.AllowGet);
         }
-
         // GET: Courses/Create
         public ActionResult Create()
         {
@@ -124,33 +113,6 @@ namespace SimpleCourseManagement.Controllers
             ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", courseVM.UserDetailsId);
             return View(courseVM);
         }
-
-        // GET: Courses/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-
-        // POST: Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Course course = db.Courses.Find(id);
-            db.Courses.Remove(course);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
