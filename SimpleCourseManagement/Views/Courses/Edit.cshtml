@@ -4,6 +4,10 @@
     {
         Response.Redirect("~/Login/Index");
     }
+    if (Convert.ToInt32(Session["UserRoleId"]) == 2)
+    {
+        Response.Redirect("~/Login/Index");
+    }
     ViewBag.Title = "Edit Course";
 }
 

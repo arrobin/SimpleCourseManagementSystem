@@ -1,6 +1,14 @@
 ﻿@model IEnumerable<SimpleCourseManagement.Models.Batch>
 
 @{
+    if (Session["UserDetailsId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    if (Convert.ToInt32(Session["UserRoleId"]) == 2)
+    {
+        Response.Redirect("~/Login/Index");
+    }
     ViewBag.Title = "Index";
 }
 
