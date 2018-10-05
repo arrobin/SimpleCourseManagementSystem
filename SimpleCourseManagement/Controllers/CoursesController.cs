@@ -106,6 +106,7 @@ namespace SimpleCourseManagement.Controllers
                 course.IsActive = courseVM.IsActive;
                 course.CreatedDateTime = DateTime.Now;
                 course.UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]);
+                int userId = Convert.ToInt32(Session["UserDetailsId"]);
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

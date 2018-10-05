@@ -218,6 +218,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TraineesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1768,6 +1769,11 @@
     <Content Include="vendors\flot\package.json" />
     <Content Include="vendors\flot\PLUGINS.md" />
     <Content Include="vendors\flot\README.md" />
+    <Content Include="Views\Trainees\Create.cshtml" />
+    <Content Include="Views\Trainees\Delete.cshtml" />
+    <Content Include="Views\Trainees\Details.cshtml" />
+    <Content Include="Views\Trainees\Edit.cshtml" />
+    <Content Include="Views\Trainees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
