@@ -1,14 +1,87 @@
 ﻿@model IEnumerable<SimpleCourseManagement.Models.Trainee>
 
 @{
+    if (Session["UserDetailsId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    if (Convert.ToInt32(Session["UserRoleId"]) == 2)
+    {
+        Response.Redirect("~/Login/Index");
+    }
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="col-md-10">
+    <div class="col-md-12 panel-info">
+        <div class="content-box-header panel-heading">
+            <div class="panel-title ">Search Options</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+            </div>
+        </div>
+        <div class="content-box-large box-with-header">
+            <div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Course</label>
+                        <select id="CourseId" name="CourseId" class="form-control"></select>
+                        @*<input type="text" class="form-control" placeholder=".col-sm-6">*@
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Batch</label>
+                        <select id="BatchId" name="BatchId" class="form-control"></select>
+                        @*<input type="text" class="form-control" placeholder=".col-sm-6">*@
+                    </div>
+                    <div class="col-sm-4">
+                        <br />
+                        <button type="submit" class="btn btn-primary">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="content-box-large">
+            <div class="panel-body">
+                <fieldset>
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input name="StartDate" class="form-control" placeholder="yyyy-mm-dd" type="date" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input name="EndDate" class="form-control" placeholder="yyyy-mm-dd" type="date" readonly="readonly">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="content-box-large">
+            <div class="panel-body">
+                <fieldset>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input name="Duration" class="form-control" placeholder="Duration" type="text" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Seat</label>
+                        <input name="TotalSeat" class="form-control" placeholder="Total Seat" type="number" readonly="readonly">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <table class="table">
     <tr>
         <th>
@@ -59,59 +132,60 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TraineeCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TraineeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TraineeImage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FatherName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MotherName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Age)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NationalIdCard)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Result)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Batch.BatchCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserDetail.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TraineeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TraineeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TraineeId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraineeCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraineeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraineeImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FatherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NationalIdCard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Batch.BatchCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserDetail.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TraineeId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TraineeId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TraineeId })
+            </td>
+        </tr>
+    }
 
 </table>
