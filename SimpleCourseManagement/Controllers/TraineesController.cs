@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SimpleCourseManagement.Models;
+using System.IO;
 
 namespace SimpleCourseManagement.Controllers
 {
@@ -70,7 +71,9 @@ namespace SimpleCourseManagement.Controllers
         // GET: Trainees/Create
         public ActionResult Create()
         {
-            ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode");
+            var courseList = db.Courses.ToList();
+            ViewBag.Courses = courseList;
+            //ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode");
             ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName");
             return View();
         }
@@ -80,17 +83,83 @@ namespace SimpleCourseManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TraineeId,TraineeCode,BatchId,TraineeName,TraineeImage,FatherName,MotherName,Gender,Age,Address,ContactNumber,Email,NationalIdCard,Result,UserDetailsId,CreatedDateTime")] Trainee trainee)
+        public ActionResult Create([Bind(Include = "TraineeId,TraineeCode,BatchId,TraineeName,TraineeImage,FatherName,MotherName,Gender,Age,Address,ContactNumber,Email,NationalIdCard,Result,UserDetailsId,CreatedDateTime")] Trainee trainee, HttpPostedFileBase file)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    db.Trainees.Add(trainee);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+
+            //ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode", trainee.BatchId);
+            //ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
+            //return View(trainee);
+            bool Status = false;
+            string message = "";
             if (ModelState.IsValid)
             {
-                db.Trainees.Add(trainee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                #region Image
+                var path = "";
+                if (file != null)
+                {
+                    if (file.ContentLength > 0)
+                    { //for checking uploaded file is image or not
+
+                        if ((Path.GetExtension(file.FileName).ToLower() == ".jpg")
+                                || (Path.GetExtension(file.FileName).ToLower() == ".png")
+                                || (Path.GetExtension(file.FileName).ToLower() == ".gif")
+                                || (Path.GetExtension(file.FileName).ToLower() == ".jpeg"))
+                        {
+                            path = Path.Combine(Server.MapPath("~/Content/TraineeImages"), file.FileName);
+                            if (file.ContentLength > 307200) //300kb
+                            {
+                                ViewBag.SizeConflict = true;
+                                return View();
+                            }
+                            else
+                            {
+                                trainee.TraineeImage = path;
+                                ViewBag.UploadSuccess = true;
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region Email and NID already Exists or Not! 
+
+                    var isExist = IsEmailExist(trainee.Email);
+                    if (isExist)
+                    {
+                        ModelState.AddModelError("EmailExist", "Email already exist");
+                        return View(trainee);
+                    }
+
+                    var NIDExist = IsNIDExist(trainee.NationalIdCard);
+                    if (NIDExist)
+                    {
+                        ModelState.AddModelError("NIDRepeat", "NID already exist");
+                        return View(trainee);
+                    }
+
+                    #endregion
+                    trainee.Result = "";
+                    trainee.TraineeImage = path;
+                    trainee.CreatedDateTime = DateTime.Now;
+                    trainee.UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]);
+                    db.Trainees.Add(trainee);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                message = "Invalid Request";
+                return View();
             }
 
-            ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode", trainee.BatchId);
-            ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
+            //ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode", trainee.BatchId);
+            //ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
             return View(trainee);
         }
         // GET: Trainees/Edit/5
@@ -153,7 +222,21 @@ namespace SimpleCourseManagement.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [NonAction]
+        public bool IsEmailExist(string emailID)
+        {
+            var v = db.Trainees.Where(a => a.Email == emailID).FirstOrDefault();
+            return v != null;
+        }
 
+
+
+        [NonAction]
+        public bool IsNIDExist(string nid)
+        {
+            var v = db.Trainees.Where(a => a.NationalIdCard == nid).FirstOrDefault();
+            return v != null;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
