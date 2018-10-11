@@ -3,136 +3,144 @@
 @{
     ViewBag.Title = "Details";
 }
+<div class="col-md-6">
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">Trainee Details</div>
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+                <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <fieldset>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TraineeCode)
+                    </dt>
 
-<h2>Details</h2>
+                    <dd>
+                        @Html.DisplayFor(model => model.TraineeCode)
+                    </dd>
 
-<div>
-    <h4>Trainee</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TraineeCode)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TraineeName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TraineeCode)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.TraineeName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TraineeName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TraineeImage)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TraineeName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.TraineeImage)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TraineeImage)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FatherName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TraineeImage)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.FatherName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FatherName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MotherName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FatherName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.MotherName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MotherName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MotherName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Gender)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Age)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Age)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ContactNumber)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.ContactNumber)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactNumber)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ContactNumber)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.NationalIdCard)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.NationalIdCard)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NationalIdCard)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Result)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NationalIdCard)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Result)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Result)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CreatedDateTime)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Result)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.CreatedDateTime)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDateTime)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Batch.BatchCode)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDateTime)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Batch.BatchCode)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Batch.BatchCode)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserDetail.UserName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Batch.BatchCode)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.UserDetail.UserName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserDetail.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserDetail.UserName)
-        </dd>
-
-    </dl>
+                </dl>
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.TraineeId }) |
+                    @Html.ActionLink("Back to List", "Index")
+                </p>
+            </fieldset>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TraineeId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

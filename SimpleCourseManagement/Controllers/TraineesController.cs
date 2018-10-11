@@ -18,9 +18,40 @@ namespace SimpleCourseManagement.Controllers
         public ActionResult Index()
         {
             var trainees = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail);
-            return View(trainees.ToList());
+            var courseList = db.Courses.ToList();
+            ViewBag.Trainees = trainees.ToList();
+            ViewBag.Courses = courseList;
+            return View();
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetTraineesByBatchId(int batchId)
+        {
+            var trainees = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Where(t => t.BatchId == batchId);
+            var batch = db.Batches.FirstOrDefault(a => a.BatchId == batchId);
+            ViewBag.StartDate = batch.StartDate.ToString("yyyy-MM-dd");
+            ViewBag.EndDate = batch.EndDate.ToString("yyyy-MM-dd");
+            ViewBag.Duration = batch.Duration;
+            ViewBag.TotalSeat = batch.TotalSeat;
+            var courseList = db.Courses.ToList();
+            ViewBag.Courses = courseList;
+            ViewBag.Trainees = trainees.ToList();
+            return View("Index");
+        }
+        public JsonResult GetAllBatchesByCourseId(int courseId)
+        {
+            return Json(new SelectList(db.Batches.Where(cs => cs.CourseId == courseId), "BatchId", "BatchCode"), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetAllTraineeByBatchId(int batchId)
+        {
+            var trainees = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Where(t => t.BatchId == batchId);
+            var batch = db.Batches.FirstOrDefault(a => a.BatchId == batchId);
+            ViewBag.StartDate = batch.StartDate;
+            ViewBag.EndDate = batch.EndDate;
+            ViewBag.Duration = batch.Duration;
+            ViewBag.TotalSeat = batch.TotalSeat;
+            return Json(trainees, JsonRequestBehavior.AllowGet);
+        }
         // GET: Trainees/Details/5
         public ActionResult Details(int? id)
         {
@@ -62,7 +93,6 @@ namespace SimpleCourseManagement.Controllers
             ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
             return View(trainee);
         }
-
         // GET: Trainees/Edit/5
         public ActionResult Edit(int? id)
         {

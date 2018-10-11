@@ -20,11 +20,17 @@ namespace SimpleCourseManagement.Controllers
             var batches = db.Batches.Include(b => b.Course).Include(b => b.UserDetail);
             return View(batches.ToList());
         }
-
+        public JsonResult GetAllBatchesByCourseId(int courseId)
+        {
+            //var batchList = db.Batches.Where(cs => (cs.CourseId == courseId), "BatchId", "BatchCode");
+            return Json(new SelectList(db.Batches.Where(cs =>cs.CourseId == courseId), "BatchId", "BatchCode"), JsonRequestBehavior.AllowGet);
+        }
         // GET: Batches/Create
         public ActionResult Create()
         {
             ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseCode");
+            var courseList = db.Courses.ToList();
+            ViewBag.Courses = courseList;
             return View();
         }
 
@@ -75,7 +81,16 @@ namespace SimpleCourseManagement.Controllers
                     ViewBag.Required = "Valid Total Seat Required!!!";
                     return View();
                 }
-                batch.Duration = 0;
+                try
+                {
+                    Convert.ToInt32(batch.Duration);
+                }
+                catch
+                {
+                    ViewBag.Required = "Valid Duration Required!!!";
+                    return View();
+                }
+                //batch.Duration = 0;
                 batch.Status = "";
                 batch.UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]);
                 batch.CreatedDateTime = DateTime.Now;
@@ -153,6 +168,14 @@ namespace SimpleCourseManagement.Controllers
                     ViewBag.Required = "Valid Total Seat Required!!!";
                     return View();
                 }
+                try
+                {
+                    Convert.ToInt32(batchVM.Duration);
+                }
+                catch
+                {
+                    ViewBag.Required = "Valid Duration Required!!!";
+                }
                 var batch = db.Batches.FirstOrDefault(x => x.BatchId == batchVM.BatchId);
                 batch.BatchCode = batchVM.BatchCode;
                 batch.CourseId = batchVM.CourseId;
@@ -163,7 +186,7 @@ namespace SimpleCourseManagement.Controllers
                 batch.CourseDetails = batchVM.CourseDetails;
                 batch.CourseFee = batchVM.CourseFee;
                 batch.TotalSeat = batchVM.TotalSeat;
-                batch.Duration = 0;
+                batch.Duration = batchVM.Duration;
                 batch.Status = "";
                 batch.UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]);
                 batch.CreatedDateTime = DateTime.Now;
