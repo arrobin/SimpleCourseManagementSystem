@@ -5,6 +5,10 @@
     {
         Response.Redirect("~/Login/Index");
     }
+    if (Convert.ToInt32(Session["UserRoleId"]) == 1)
+    {
+        Response.Redirect("~/Login/Index");
+    }
     ViewBag.Title = "Create";
 }
 @using (Html.BeginForm("Create", "Trainees", FormMethod.Post, new { enctype = "multipart/form-data" }))
