@@ -1,0 +1,57 @@
+﻿@model SimpleCourseManagement.Models.Trainee
+@{
+    if (Session["UserDetailsId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    if (Convert.ToInt32(Session["UserRoleId"]) == 2)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate</title>
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jQuery.print.js"></script>
+    <script>
+        $(function(){
+            $('#print').on('click', function() {
+                $.print(".print_div");
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div  style="width:800px; height:600px; padding:20px; margin-left:200px; border: 10px solid #FFFFFF">
+        <div class="print_div" style="width:800px; height:600px; background:#fffdd0; padding:20px; border: 5px solid #787878">
+            <div style="width:750px; height:550px; padding:20px; border: 5px solid #787878">
+                <span style="margin-left:240px;font-size:30px; font-weight:bold">Certificate of Training</span>
+                <br><br>
+                <span style="font-size:20px;font-weight:bold"><i>Reg.No.:</i> <b>@Model.TraineeCode</b></span>
+                <span style="margin-left:430px;font-size:20px; font-weight:bold"><i>Issue Date:</i> <b>@DateTime.Now.ToString("yyyy-MM-dd")</b></span>
+                <br><br>
+                <span style="margin-left:260px;font-size:25px"><i>This is to certify that</i></span>
+                <br><br>
+                <span style="margin-left:270px;font-size:25px"><b>@Model.TraineeName</b></span><br /><br />
+                <span style="margin-left:110px;font-size:25px"><i>Has Successfully Completed the Training Course of</i></span> <br /><br />
+                <span style="margin-left:110px;font-size:25px"><b>@Model.Batch.Course.CourseName</b> <i>with Grade of </i><b> @Model.Result</b></span><br /><br />
+                <span style="margin-left:100px;font-size:25px"><i>Held from</i> <b>@Model.Batch.StartDate.ToString("yyyy-MM-dd") </b><i>to</i> <b>@Model.Batch.EndDate.ToString("yyyy-MM-dd")</b> <i>at Nerd Castle.</i></span><br/><br/>
+                <span style="font-size:20px;font-weight:bold"><i>Coverd Topics:</i></span><br /><br />
+                <span style="font-size:20px;">@Model.Batch.CourseDetails</span><br /><br /><br /><br /><br /><br />
+                <span style="margin-left:550px;font-size:20px; font-weight:bold"><i>-------------------------</i></span>
+                <span style="margin-left:595px;font-size:20px; font-weight:bold"><i>Signature</i></span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <center> <button id='print' style='margin-top: 25px; padding: 10px; border: none; text-align: center; background: black; border-radius: 4px; color: #fff; font-weight: bold; cursor: pointer;'>PRINT</button></center>
+    </div>
+</body>
+
+</html>
+

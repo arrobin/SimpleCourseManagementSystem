@@ -116,7 +116,7 @@
                                     <td>@item.NationalIdCard</td>
                                     <td>@item.Result</td>
                                     <td><a class="btn btn-primary btn-sm" href=@Url.Action("Details","Trainees",new { id = item.TraineeId })>Details</a></td>
-                                    <td><a class="btn btn-primary btn-sm" href=@Url.Action("", "", new { id = item.TraineeId })>Certificate</a></td>
+                                    <td><a class="btn btn-primary btn-sm" href=@Url.Action("Certificate", "Trainees", new { id = item.TraineeId })>Certificate</a></td>
                                 </tr>
                             }
                         </tbody>

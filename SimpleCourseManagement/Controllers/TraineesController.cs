@@ -228,14 +228,24 @@ namespace SimpleCourseManagement.Controllers
             var v = db.Trainees.Where(a => a.Email == emailID).FirstOrDefault();
             return v != null;
         }
-
-
-
         [NonAction]
         public bool IsNIDExist(string nid)
         {
             var v = db.Trainees.Where(a => a.NationalIdCard == nid).FirstOrDefault();
             return v != null;
+        }
+        public ActionResult Certificate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Trainee trainee = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Include(t => t.Batch.Course).FirstOrDefault(a => a.TraineeId == id);
+            if (trainee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(trainee);
         }
         protected override void Dispose(bool disposing)
         {
