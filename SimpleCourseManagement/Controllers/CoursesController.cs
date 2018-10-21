@@ -25,6 +25,24 @@ namespace SimpleCourseManagement.Controllers
             var courseList = db.Courses.Select(a => new { a.CourseId, a.CourseCode }).ToList();
             return Json(courseList, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetChartData()
+        {
+            List<object> chartData = new List<object>();
+            chartData.Add(new object[]
+            {
+                "Course", "TotalTrainee"
+            });
+            var courseList = db.Courses.ToList();
+            foreach(var course in courseList)
+            {
+                int totalTrainee = db.Trainees.Count(a => a.Batch.CourseId == course.CourseId);
+                chartData.Add(new object[]
+                    {
+                        course.CourseCode, totalTrainee
+                    });
+            }
+            return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
         // GET: Courses/Create
         public ActionResult Create()
         {

@@ -24,8 +24,7 @@
         </div>
     </div>
     @Html.Partial("_Footer")
-
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@    
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -43,10 +42,9 @@
     <script src="~/js/custom.js"></script>
     <script src="~/js/forms.js"></script>
     <script src="~/js/tables.js"></script>
-    
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
             $('#CourseId').change(function () {
                 $.ajax({
                     type: "post",
@@ -67,32 +65,65 @@
             });
         });
     </script>
-    @*<script type="text/javascript">
-        $(document).ready(function () {
-            $("#traineeSearchButton").click(function () {
-                //alert("button clicked.");
-                $.ajax({
-                    type: "post",
-                    url: "/Trainees/GetAllTraineeByBatchId",
-                    data: { batchId: $('#BatchId').val() },
-                    datatype: "json",
-                    traditional: true,
-                    success: function (data) {
-                        var traineeList = "<thead><tr><th>Trainee</th><th>Reg.No.</th><th>Phone</th><th>Email</th><th>NID</th><th>Grade</th><th>Details</th><th>Certificate</th><tr></thead>";
-                        traineeList = traineeList + '<tbody>';
-                        //for (var i = 0; i < data.length; i++) {
-                        //    traineeList += '<tr class="odd gradeX"><td>"' + value.TraineeName + '"</td><td>"' + value.TraineeCode + '"</td><td>"' + value.ContactNumber + '"</td><td>"' + value.Email + '"</td><td>"' + value.NationalIdCard + '"</td><td>"' + value.Result + '"</td><td><a class="btn btn-primary btn-sm" href="">Details</a></td><td><a class="btn btn-primary btn-sm" href="">Certificate</a></td></tr>';
-                        //}
-                        $.each(data, function (key, value) {
-                            traineeList += '<tr class="odd gradeX"><td>"' + value.TraineeName + '"</td><td>"' + value.TraineeCode + '"</td><td>"' + value.ContactNumber + '"</td><td>"' + value.Email + '"</td><td>"' + value.NationalIdCard + '"</td><td>"' + value.Result + '"</td><td><a class="btn btn-primary btn-sm" href="">Details</a></td><td><a class="btn btn-primary btn-sm" href="">Certificate</a></td></tr>';
-                        });
-                        traineeList = traineeList + '</tbody>';
-                        $('#example').html(traineeList);
-                    }
-                });
+    
+    <script>
+           $(document).ready(function () {
+            //Load Data Here
+            var chartData = null;
+            $.ajax({
+                url: '/Courses/GetChartData',
+                type: 'GET',
+                dataType: 'json',
+                data: '',
+                success: function (d) {
+                    chartData = d;
+                },
+                error: function () {
+                    alert('Error!');
+                }
+            }).done(function () {
+                drawBarChart(chartData);
             });
         });
-    </script>*@
+        function drawBarChart(chartData) {
+            var data = google.visualization.arrayToDataTable(chartData);
+            var options = {
+                title: "Course Wise Total Trainee",
+                pointSize: 5,
+                is3D: true
+            };
+            var barChart = new google.visualization.BarChart(document.getElementById('divBarChart'));
+            barChart.draw(data, options);
+        }
+        //google.charts.setOnLoadCallback(drawBarChart);
+        google.load('visualization', '1', { packages: ['corechart'] });
+    </script>
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                $("#traineeSearchButton").click(function () {
+                    //alert("button clicked.");
+                    $.ajax({
+                        type: "post",
+                        url: "/Trainees/GetAllTraineeByBatchId",
+                        data: { batchId: $('#BatchId').val() },
+                        datatype: "json",
+                        traditional: true,
+                        success: function (data) {
+                            var traineeList = "<thead><tr><th>Trainee</th><th>Reg.No.</th><th>Phone</th><th>Email</th><th>NID</th><th>Grade</th><th>Details</th><th>Certificate</th><tr></thead>";
+                            traineeList = traineeList + '<tbody>';
+                            //for (var i = 0; i < data.length; i++) {
+                            //    traineeList += '<tr class="odd gradeX"><td>"' + value.TraineeName + '"</td><td>"' + value.TraineeCode + '"</td><td>"' + value.ContactNumber + '"</td><td>"' + value.Email + '"</td><td>"' + value.NationalIdCard + '"</td><td>"' + value.Result + '"</td><td><a class="btn btn-primary btn-sm" href="">Details</a></td><td><a class="btn btn-primary btn-sm" href="">Certificate</a></td></tr>';
+                            //}
+                            $.each(data, function (key, value) {
+                                traineeList += '<tr class="odd gradeX"><td>"' + value.TraineeName + '"</td><td>"' + value.TraineeCode + '"</td><td>"' + value.ContactNumber + '"</td><td>"' + value.Email + '"</td><td>"' + value.NationalIdCard + '"</td><td>"' + value.Result + '"</td><td><a class="btn btn-primary btn-sm" href="">Details</a></td><td><a class="btn btn-primary btn-sm" href="">Certificate</a></td></tr>';
+                            });
+                            traineeList = traineeList + '</tbody>';
+                            $('#example').html(traineeList);
+                        }
+                    });
+                });
+            });
+        </script>*@
     @*<script>
             $(document).ready(function () {
                 LoadCourses();
