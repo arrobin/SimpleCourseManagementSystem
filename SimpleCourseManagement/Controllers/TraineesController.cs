@@ -111,17 +111,21 @@ namespace SimpleCourseManagement.Controllers
                                 || (Path.GetExtension(file.FileName).ToLower() == ".gif")
                                 || (Path.GetExtension(file.FileName).ToLower() == ".jpeg"))
                         {
-                            path = Path.Combine(Server.MapPath("~/Content/TraineeImages"), file.FileName);
                             if (file.ContentLength > 307200) //300kb
                             {
                                 ViewBag.SizeConflict = true;
-                                return View();
+                                var courseList = db.Courses.ToList();
+                                ViewBag.Courses = courseList;
+                                return View(trainee);
                             }
-                            else
-                            {
-                                trainee.TraineeImage = path;
-                                ViewBag.UploadSuccess = true;
-                            }
+                            string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                            string extention = Path.GetExtension(file.FileName);
+                            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extention;
+                            path = "~/Content/TraineeImages/" + fileName;
+                            fileName = Path.Combine(Server.MapPath("~/Content/TraineeImages/"), fileName);
+                            file.SaveAs(fileName);
+                            trainee.TraineeImage = path;
+                            ViewBag.UploadSuccess = true;
                         }
                     }
                     #endregion
