@@ -24,8 +24,9 @@
         </div>
     </div>
     @Html.Partial("_Footer")
-    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@    
+    
     <script src="https://code.jquery.com/jquery.js"></script>
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@    
     <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -65,7 +66,39 @@
             });
         });
     </script>
-    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#traineeSearchButton').click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/Trainees/GetTraineeByCode",
+                    data: { traineeCode: $('#TraineeCode').val() },
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data != null) {
+                            $('#TraineeId').val(data.TraineeId);
+                            $('#TraineeName').val(data.TraineeName);
+                            $('#FatherName').val(data.FatherName);
+                            $('#MotherName').val(data.MotherName);
+                            $('#ContactNumber').val(data.ContactNumber);
+                            $('#Email').val(data.Email);
+                            $('#NationalIdCard').val(data.NationalIdCard);
+                            $('#Result').val(data.Result);
+                            var imagePath = data.TraineeImage.substring(data.TraineeImage.indexOf("~") + 1, data.TraineeImage.length);
+                            console.log(imagePath);
+                            $('#trainee_image').attr('src', imagePath);
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
     <script>
            $(document).ready(function () {
             //Load Data Here
@@ -98,6 +131,38 @@
         //google.charts.setOnLoadCallback(drawBarChart);
         google.load('visualization', '1', { packages: ['corechart'] });
     </script>
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+                $("#traineeSearchButton").click(function () {
+                    //alert("button clicked.");
+                    $.ajax({
+                        type: "post",
+                        url: "/Trainees/GetTraineeByCode",
+                        data: { traineeCode: $('#TraineeCode').val() },
+                        datatype: "json",
+                        traditional: true,
+                        success: function (data) {
+                            if (response != null) {
+                                $('#TraineeName').val(data.TraineeName);
+                                $('#FatherName').val(data.FatherName);
+                                $('#MotherName').val(data.MotherName);
+                                $('#ContactNumber').val(data.ContactNumber);
+                                $('#Email').val(data.Email);
+                                $('#NationalIdCard').val(data.NationalIdCard);
+                            } else {
+                                alert("Something went wrong");
+                            }
+                        },
+                        failure: function(response) {  
+                        alert(response.responseText);  
+                    },  
+                    error: function(response) {  
+                        alert(response.responseText);  
+                    }
+                    });
+                });
+            });
+        </script>*@
     @*<script type="text/javascript">
             $(document).ready(function () {
                 $("#traineeSearchButton").click(function () {

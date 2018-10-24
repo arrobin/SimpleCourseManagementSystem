@@ -1,0 +1,90 @@
+﻿@model SimpleCourseManagement.Models.Trainee
+
+@{
+    if (Session["UserDetailsId"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    if (Convert.ToInt32(Session["UserRoleId"]) == 2)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    ViewBag.Title = "Result Add";
+}
+
+<form action=@Url.Action("AddResult", "Trainees") method="post" class="form-element">
+    @Html.AntiForgeryToken()
+    <div class="col-md-10">
+        <div class="col-md-12 panel-info">
+            <div class="content-box-header panel-heading">
+                <div class="panel-title ">Trainee Search Options</div>
+                <label style="color:red" class="field-validation-error">@ViewBag.Result</label>
+            </div>
+            <input id="TraineeId" name="TraineeId" type="hidden" value="">
+            <div class="content-box-large box-with-header">
+                <div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Trainee Code</label>
+                            <input name="TraineeCode" id="TraineeCode" class="form-control" placeholder="Enter Trainee Code" type="text" value="">
+                        </div>
+                        <div class="col-sm-4">
+                            <br />
+                            @*<button type="submit" class="btn btn-primary">
+                                Search
+                            </button>*@
+                            <input type="button" class="btn btn-primary" id="traineeSearchButton" value="Search" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 panel-info">
+            <div class="content-box-large">
+                <div class="panel-body">
+                    <fieldset>
+                        <div id="imageofTrainee" class="form-group">
+                            <img id="trainee_image" src="" width="150" height="150" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Trainee Name</label>
+                            <input name="TraineeName" id="TraineeName" class="form-control" placeholder="" type="text" value="@Model.TraineeName" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label>Father Name</label>
+                            <input name="FatherName" id="FatherName" class="form-control" placeholder="" type="text" value="@Model.FatherName" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label>Mother Name</label>
+                            <input name="MotherName" id="MotherName" class="form-control" placeholder="" type="text" value="@Model.MotherName" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input name="ContactNumber" id="ContactNumber" class="form-control" placeholder="" type="text" value="@Model.ContactNumber" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="Email" id="Email" class="form-control" placeholder="" type="text" value="@Model.Email" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label>National ID Card</label>
+                            <input name="NationalIdCard" id="NationalIdCard" class="form-control" placeholder="" type="text" value="@Model.NationalIdCard" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label>Result</label>
+                            <input id="Result" name="Result" class="form-control" placeholder="Enter Result" type="text" value="">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                Add Result
+                            </button>
+                            @*<input type="button" class="btn btn-primary" id="traineeSearchButton" value="Search" />*@
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

@@ -28,7 +28,7 @@
                             <li>@Html.ActionLink("Batch List", "Index", "Batches")</li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="glyphicon glyphicon-upload"></i> Result Add</a></li>
+                    <li><a href="@Url.Action("AddResult","Trainees")"><i class="glyphicon glyphicon-upload"></i> Result Add</a></li>
                     <li><a href="@Url.Action("Index","Trainees")"><i class="glyphicon glyphicon-list"></i> Trainee List</a></li>
                 }
                 else

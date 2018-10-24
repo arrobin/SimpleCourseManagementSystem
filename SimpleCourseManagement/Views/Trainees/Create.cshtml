@@ -76,9 +76,9 @@
 
                     <div class="form-group">
                         <label>Gender</label><br>
-                        @Html.RadioButtonFor(model => model.Gender, "M")
+                        @Html.RadioButtonFor(model => model.Gender, "Male")
                         @Html.Label("Male")
-                        @Html.RadioButtonFor(model => model.Gender, "F")
+                        @Html.RadioButtonFor(model => model.Gender, "Female ")
                         @Html.Label("Female")
                         @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                     </div>

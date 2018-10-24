@@ -166,66 +166,75 @@ namespace SimpleCourseManagement.Controllers
             //ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
             return View(trainee);
         }
-        // GET: Trainees/Edit/5
-        public ActionResult Edit(int? id)
+        public JsonResult GetTraineeByCode(string traineeCode)
         {
-            if (id == null)
+            var trainee = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Where(t => t.TraineeCode == traineeCode).FirstOrDefault();
+            if (trainee != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var result = new
+                {
+                    TraineeId = trainee.TraineeId,
+                    TraineeName = trainee.TraineeName,
+                    TraineeImage = trainee.TraineeImage,
+                    FatherName = trainee.FatherName,
+                    MotherName = trainee.MotherName,
+                    ContactNumber = trainee.ContactNumber,
+                    Email = trainee.Email,
+                    NationalIdCard = trainee.NationalIdCard,
+                    Result = trainee.Result,
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            Trainee trainee = db.Trainees.Find(id);
-            if (trainee == null)
+            else
             {
-                return HttpNotFound();
+                var result = new
+                {
+                    TraineeId = 0,
+                    TraineeName = "",
+                    TraineeImage = "",
+                    FatherName = "",
+                    MotherName = "",
+                    ContactNumber = "",
+                    Email = "",
+                    NationalIdCard = "",
+                    Result = "",
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode", trainee.BatchId);
-            ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
-            return View(trainee);
         }
-
-        // POST: Trainees/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpGet]
+        public ActionResult AddResult()
+        {
+            Trainee Trainee = new Trainee();
+            //ViewBag.Trainee = Trainee;
+            return View(Trainee);
+        }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TraineeId,TraineeCode,BatchId,TraineeName,TraineeImage,FatherName,MotherName,Gender,Age,Address,ContactNumber,Email,NationalIdCard,Result,UserDetailsId,CreatedDateTime")] Trainee trainee)
+        public string AddResult(string result, int traineeId)
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(result))
+                {
+                    ViewBag.Result = "Result is Required!!!";                    
+                    return ViewBag.Result;
+                }
+                if (traineeId==0)
+                {
+                    ViewBag.Result = "Please Search a Valid Trainee";
+                    return ViewBag.Result;
+                }
+                var trainee = db.Trainees.FirstOrDefault(a => a.TraineeId == traineeId);
+                trainee.Result = result;
                 db.Entry(trainee).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Result = "Result Saved";
+                return ViewBag.Result;
             }
-            ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode", trainee.BatchId);
-            ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
-            return View(trainee);
+            ViewBag.Result = "Result Not Saved";
+            return ViewBag.Result;
         }
-
-        // GET: Trainees/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Trainee trainee = db.Trainees.Find(id);
-            if (trainee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(trainee);
-        }
-
-        // POST: Trainees/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Trainee trainee = db.Trainees.Find(id);
-            db.Trainees.Remove(trainee);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+                
         [NonAction]
         public bool IsEmailExist(string emailID)
         {

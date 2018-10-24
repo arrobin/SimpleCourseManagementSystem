@@ -1757,6 +1757,7 @@
     <Content Include="Views\Trainees\Edit.cshtml" />
     <Content Include="Views\Trainees\Index.cshtml" />
     <Content Include="Views\Trainees\Certificate.cshtml" />
+    <Content Include="Views\Trainees\AddResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
