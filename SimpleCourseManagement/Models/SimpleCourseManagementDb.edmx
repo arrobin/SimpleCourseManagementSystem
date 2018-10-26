@@ -4,44 +4,44 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SimpleCourseManagementDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="SimpleCourseManagementDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012">
         <EntityType Name="Batch">
           <Key>
             <PropertyRef Name="BatchId" />
           </Key>
-          <Property Name="BatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="BatchCode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CourseId" Type="int" Nullable="false" />
-          <Property Name="StartDate" Type="date" Nullable="false" />
-          <Property Name="EndDate" Type="date" Nullable="false" />
-          <Property Name="Time" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Instructor" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="BatchId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="BatchCode" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="CourseId" Nullable="false" Type="int" />
+          <Property Name="StartDate" Nullable="false" Type="date" />
+          <Property Name="EndDate" Nullable="false" Type="date" />
+          <Property Name="Time" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="Instructor" Nullable="false" MaxLength="150" Type="varchar" />
           <Property Name="CourseDetails" Type="varchar(max)" />
-          <Property Name="Duration" Type="int" Nullable="false" />
-          <Property Name="CourseFee" Type="float" Nullable="false" />
-          <Property Name="TotalSeat" Type="int" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserDetailsId" Type="int" Nullable="false" />
-          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Nullable="false" Type="int" />
+          <Property Name="CourseFee" Nullable="false" Type="float" />
+          <Property Name="TotalSeat" Nullable="false" Type="int" />
+          <Property Name="Status" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="UserDetailsId" Nullable="false" Type="int" />
+          <Property Name="CreatedDateTime" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseId" />
           </Key>
-          <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CourseCode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CourseName" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="UserDetailsId" Type="int" Nullable="false" />
-          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CourseId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="CourseCode" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="CourseName" Nullable="false" MaxLength="150" Type="varchar" />
+          <Property Name="IsActive" Nullable="false" Type="bit" />
+          <Property Name="UserDetailsId" Nullable="false" Type="int" />
+          <Property Name="CreatedDateTime" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Nullable="false" MaxLength="128" Type="nvarchar" />
+          <Property Name="principal_id" Nullable="false" Type="int" />
+          <Property Name="diagram_id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
@@ -49,44 +49,54 @@
           <Key>
             <PropertyRef Name="TraineeId" />
           </Key>
-          <Property Name="TraineeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TraineeCode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="BatchId" Type="int" Nullable="false" />
-          <Property Name="TraineeName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="TraineeId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="TraineeName" Nullable="false" MaxLength="150" Type="varchar" />
           <Property Name="TraineeImage" Type="varchar(max)" />
-          <Property Name="FatherName" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="MotherName" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Age" Type="float" Nullable="false" />
-          <Property Name="Address" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="ContactNumber" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="NationalIdCard" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Result" Type="varchar" MaxLength="150" />
-          <Property Name="UserDetailsId" Type="int" Nullable="false" />
-          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="FatherName" Nullable="false" MaxLength="150" Type="varchar" />
+          <Property Name="MotherName" Nullable="false" MaxLength="150" Type="varchar" />
+          <Property Name="Gender" Nullable="false" MaxLength="10" Type="varchar" />
+          <Property Name="Age" Nullable="false" Type="float" />
+          <Property Name="Address" Nullable="false" MaxLength="500" Type="varchar" />
+          <Property Name="ContactNumber" Nullable="false" MaxLength="20" Type="varchar" />
+          <Property Name="Email" Nullable="false" MaxLength="100" Type="varchar" />
+          <Property Name="NationalIdCard" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="UserDetailsId" Nullable="false" Type="int" />
+          <Property Name="CreatedDateTime" Nullable="false" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TraineeCourse">
+          <Key>
+            <PropertyRef Name="TraineeCourseId" />
+          </Key>
+          <Property Name="TraineeCourseId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="TraineeCode" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="TraineeId" Nullable="false" Type="int" />
+          <Property Name="CourseId" Nullable="false" Type="int" />
+          <Property Name="BatchId" Nullable="false" Type="int" />
+          <Property Name="Result" MaxLength="50" Type="varchar" />
+          <Property Name="UserDetailsId" Nullable="false" Type="int" />
+          <Property Name="CreatedDateTime" Nullable="false" Type="datetime" />
         </EntityType>
         <EntityType Name="UserDetails">
           <Key>
             <PropertyRef Name="UserDetailsId" />
           </Key>
-          <Property Name="UserDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="LoginName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LoginPassword" Type="varchar(max)" Nullable="false" />
-          <Property Name="UserRoleId" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="UserDetailsId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="UserName" Nullable="false" MaxLength="150" Type="varchar" />
+          <Property Name="LoginName" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="LoginPassword" Nullable="false" Type="varchar(max)" />
+          <Property Name="UserRoleId" Nullable="false" Type="int" />
+          <Property Name="IsActive" Nullable="false" Type="bit" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="UserRoleId" />
           </Key>
-          <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserRoleId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="Role" Nullable="false" MaxLength="50" Type="varchar" />
         </EntityType>
         <Association Name="FK_Batch_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="1" />
-          <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+          <End Type="Self.Course" Multiplicity="1" Role="Course" />
+          <End Type="Self.Batch" Multiplicity="*" Role="Batch" />
           <ReferentialConstraint>
             <Principal Role="Course">
               <PropertyRef Name="CourseId" />
@@ -97,8 +107,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Batch_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
-          <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+          <End Type="Self.UserDetails" Multiplicity="1" Role="UserDetails" />
+          <End Type="Self.Batch" Multiplicity="*" Role="Batch" />
           <ReferentialConstraint>
             <Principal Role="UserDetails">
               <PropertyRef Name="UserDetailsId" />
@@ -109,8 +119,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Course_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
-          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <End Type="Self.UserDetails" Multiplicity="1" Role="UserDetails" />
+          <End Type="Self.Course" Multiplicity="*" Role="Course" />
           <ReferentialConstraint>
             <Principal Role="UserDetails">
               <PropertyRef Name="UserDetailsId" />
@@ -120,21 +130,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Trainee_Batch">
-          <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
-          <End Role="Trainee" Type="Self.Trainee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Batch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="Trainee">
-              <PropertyRef Name="BatchId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Trainee_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
-          <End Role="Trainee" Type="Self.Trainee" Multiplicity="*" />
+          <End Type="Self.UserDetails" Multiplicity="1" Role="UserDetails" />
+          <End Type="Self.Trainee" Multiplicity="*" Role="Trainee" />
           <ReferentialConstraint>
             <Principal Role="UserDetails">
               <PropertyRef Name="UserDetailsId" />
@@ -144,9 +142,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TraineeCourse_Batch">
+          <End Type="Self.Batch" Multiplicity="1" Role="Batch" />
+          <End Type="Self.TraineeCourse" Multiplicity="*" Role="TraineeCourse" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Course">
+          <End Type="Self.Course" Multiplicity="1" Role="Course" />
+          <End Type="Self.TraineeCourse" Multiplicity="*" Role="TraineeCourse" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Trainee">
+          <End Type="Self.Trainee" Multiplicity="1" Role="Trainee" />
+          <End Type="Self.TraineeCourse" Multiplicity="*" Role="TraineeCourse" />
+          <ReferentialConstraint>
+            <Principal Role="Trainee">
+              <PropertyRef Name="TraineeId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="TraineeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_UserDetails">
+          <End Type="Self.UserDetails" Multiplicity="1" Role="UserDetails" />
+          <End Type="Self.TraineeCourse" Multiplicity="*" Role="TraineeCourse" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="UserDetailsId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="UserDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserDetails_UserRole">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
-          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <End Type="Self.UserRole" Multiplicity="1" Role="UserRole" />
+          <End Type="Self.UserDetails" Multiplicity="*" Role="UserDetails" />
           <ReferentialConstraint>
             <Principal Role="UserRole">
               <PropertyRef Name="UserRoleId" />
@@ -161,31 +207,44 @@
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trainee" EntityType="Self.Trainee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TraineeCourse" EntityType="Self.TraineeCourse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Batch_Course" Association="Self.FK_Batch_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="Batch" EntitySet="Batch" />
+            <End EntitySet="Course" Role="Course" />
+            <End EntitySet="Batch" Role="Batch" />
           </AssociationSet>
           <AssociationSet Name="FK_Batch_UserDetails" Association="Self.FK_Batch_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="Batch" EntitySet="Batch" />
+            <End EntitySet="UserDetails" Role="UserDetails" />
+            <End EntitySet="Batch" Role="Batch" />
           </AssociationSet>
           <AssociationSet Name="FK_Course_UserDetails" Association="Self.FK_Course_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="Course" EntitySet="Course" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Trainee_Batch" Association="Self.FK_Trainee_Batch">
-            <End Role="Batch" EntitySet="Batch" />
-            <End Role="Trainee" EntitySet="Trainee" />
+            <End EntitySet="UserDetails" Role="UserDetails" />
+            <End EntitySet="Course" Role="Course" />
           </AssociationSet>
           <AssociationSet Name="FK_Trainee_UserDetails" Association="Self.FK_Trainee_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="Trainee" EntitySet="Trainee" />
+            <End EntitySet="UserDetails" Role="UserDetails" />
+            <End EntitySet="Trainee" Role="Trainee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Batch" Association="Self.FK_TraineeCourse_Batch">
+            <End EntitySet="Batch" Role="Batch" />
+            <End EntitySet="TraineeCourse" Role="TraineeCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Course" Association="Self.FK_TraineeCourse_Course">
+            <End EntitySet="Course" Role="Course" />
+            <End EntitySet="TraineeCourse" Role="TraineeCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Trainee" Association="Self.FK_TraineeCourse_Trainee">
+            <End EntitySet="Trainee" Role="Trainee" />
+            <End EntitySet="TraineeCourse" Role="TraineeCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_UserDetails" Association="Self.FK_TraineeCourse_UserDetails">
+            <End EntitySet="UserDetails" Role="UserDetails" />
+            <End EntitySet="TraineeCourse" Role="TraineeCourse" />
           </AssociationSet>
           <AssociationSet Name="FK_UserDetails_UserRole" Association="Self.FK_UserDetails_UserRole">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End EntitySet="UserRole" Role="UserRole" />
+            <End EntitySet="UserDetails" Role="UserDetails" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -201,7 +260,7 @@
           <Property Name="CourseId" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Time" Type="String" Nullable="false" />
+          <Property Name="Time" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Instructor" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CourseDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Duration" Type="Int32" Nullable="false" />
@@ -212,7 +271,7 @@
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Course" Relationship="Self.FK_Batch_Course" FromRole="Batch" ToRole="Course" />
           <NavigationProperty Name="UserDetail" Relationship="Self.FK_Batch_UserDetails" FromRole="Batch" ToRole="UserDetails" />
-          <NavigationProperty Name="Trainees" Relationship="Self.FK_Trainee_Batch" FromRole="Batch" ToRole="Trainee" />
+          <NavigationProperty Name="TraineeCourses" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_Batch" FromRole="Batch" ToRole="TraineeCourse" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -226,6 +285,7 @@
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Batches" Relationship="Self.FK_Batch_Course" FromRole="Course" ToRole="Batch" />
           <NavigationProperty Name="UserDetail" Relationship="Self.FK_Course_UserDetails" FromRole="Course" ToRole="UserDetails" />
+          <NavigationProperty Name="TraineeCourses" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_Course" FromRole="Course" ToRole="TraineeCourse" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -242,8 +302,6 @@
             <PropertyRef Name="TraineeId" />
           </Key>
           <Property Name="TraineeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TraineeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="BatchId" Type="Int32" Nullable="false" />
           <Property Name="TraineeName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TraineeImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="FatherName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
@@ -254,11 +312,10 @@
           <Property Name="ContactNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NationalIdCard" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Result" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="UserDetailsId" Type="Int32" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Batch" Relationship="Self.FK_Trainee_Batch" FromRole="Trainee" ToRole="Batch" />
           <NavigationProperty Name="UserDetail" Relationship="Self.FK_Trainee_UserDetails" FromRole="Trainee" ToRole="UserDetails" />
+          <NavigationProperty Name="TraineeCourses" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_Trainee" FromRole="Trainee" ToRole="TraineeCourse" />
         </EntityType>
         <EntityType Name="UserDetail">
           <Key>
@@ -274,6 +331,7 @@
           <NavigationProperty Name="Courses" Relationship="Self.FK_Course_UserDetails" FromRole="UserDetails" ToRole="Course" />
           <NavigationProperty Name="Trainees" Relationship="Self.FK_Trainee_UserDetails" FromRole="UserDetails" ToRole="Trainee" />
           <NavigationProperty Name="UserRole" Relationship="Self.FK_UserDetails_UserRole" FromRole="UserDetails" ToRole="UserRole" />
+          <NavigationProperty Name="TraineeCourses" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_UserDetails" FromRole="UserDetail" ToRole="TraineeCourse" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -304,18 +362,6 @@
             </Principal>
             <Dependent Role="Batch">
               <PropertyRef Name="UserDetailsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Trainee_Batch">
-          <End Role="Batch" Type="Self.Batch" Multiplicity="1" />
-          <End Role="Trainee" Type="Self.Trainee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Batch">
-              <PropertyRef Name="BatchId" />
-            </Principal>
-            <Dependent Role="Trainee">
-              <PropertyRef Name="BatchId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -370,10 +416,6 @@
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Batch" EntitySet="Batches" />
           </AssociationSet>
-          <AssociationSet Name="FK_Trainee_Batch" Association="Self.FK_Trainee_Batch">
-            <End Role="Batch" EntitySet="Batches" />
-            <End Role="Trainee" EntitySet="Trainees" />
-          </AssociationSet>
           <AssociationSet Name="FK_Course_UserDetails" Association="Self.FK_Course_UserDetails">
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="Course" EntitySet="Courses" />
@@ -386,7 +428,89 @@
             <End Role="UserRole" EntitySet="UserRoles" />
             <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
+          <EntitySet Name="TraineeCourses" EntityType="SimpleCourseManagementDbModel.TraineeCourse" />
+          <AssociationSet Name="FK_TraineeCourse_Batch" Association="SimpleCourseManagementDbModel.FK_TraineeCourse_Batch">
+            <End Role="Batch" EntitySet="Batches" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Course" Association="SimpleCourseManagementDbModel.FK_TraineeCourse_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_Trainee" Association="SimpleCourseManagementDbModel.FK_TraineeCourse_Trainee">
+            <End Role="Trainee" EntitySet="Trainees" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraineeCourse_UserDetails" Association="SimpleCourseManagementDbModel.FK_TraineeCourse_UserDetails">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="TraineeCourse" EntitySet="TraineeCourses" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TraineeCourse">
+          <Key>
+            <PropertyRef Name="TraineeCourseId" />
+          </Key>
+          <Property Name="TraineeCourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TraineeCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TraineeId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="BatchId" Type="Int32" Nullable="false" />
+          <Property Name="Result" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserDetailsId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Batch" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_Batch" FromRole="TraineeCourse" ToRole="Batch" />
+          <NavigationProperty Name="Course" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_Course" FromRole="TraineeCourse" ToRole="Course" />
+          <NavigationProperty Name="Trainee" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_Trainee" FromRole="TraineeCourse" ToRole="Trainee" />
+          <NavigationProperty Name="UserDetail" Relationship="SimpleCourseManagementDbModel.FK_TraineeCourse_UserDetails" FromRole="TraineeCourse" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK_TraineeCourse_Batch">
+          <End Type="SimpleCourseManagementDbModel.Batch" Role="Batch" Multiplicity="1" />
+          <End Type="SimpleCourseManagementDbModel.TraineeCourse" Role="TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Batch">
+              <PropertyRef Name="BatchId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="BatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Course">
+          <End Type="SimpleCourseManagementDbModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="SimpleCourseManagementDbModel.TraineeCourse" Role="TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_Trainee">
+          <End Type="SimpleCourseManagementDbModel.Trainee" Role="Trainee" Multiplicity="1" />
+          <End Type="SimpleCourseManagementDbModel.TraineeCourse" Role="TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainee">
+              <PropertyRef Name="TraineeId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="TraineeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraineeCourse_UserDetails">
+          <End Type="SimpleCourseManagementDbModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+          <End Type="SimpleCourseManagementDbModel.TraineeCourse" Role="TraineeCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserDetailsId" />
+            </Principal>
+            <Dependent Role="TraineeCourse">
+              <PropertyRef Name="UserDetailsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -440,8 +564,6 @@
             <EntityTypeMapping TypeName="SimpleCourseManagementDbModel.Trainee">
               <MappingFragment StoreEntitySet="Trainee">
                 <ScalarProperty Name="TraineeId" ColumnName="TraineeId" />
-                <ScalarProperty Name="TraineeCode" ColumnName="TraineeCode" />
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
                 <ScalarProperty Name="TraineeName" ColumnName="TraineeName" />
                 <ScalarProperty Name="TraineeImage" ColumnName="TraineeImage" />
                 <ScalarProperty Name="FatherName" ColumnName="FatherName" />
@@ -452,7 +574,6 @@
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="NationalIdCard" ColumnName="NationalIdCard" />
-                <ScalarProperty Name="Result" ColumnName="Result" />
                 <ScalarProperty Name="UserDetailsId" ColumnName="UserDetailsId" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
               </MappingFragment>
@@ -475,6 +596,20 @@
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TraineeCourses">
+            <EntityTypeMapping TypeName="SimpleCourseManagementDbModel.TraineeCourse">
+              <MappingFragment StoreEntitySet="TraineeCourse">
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UserDetailsId" ColumnName="UserDetailsId" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="TraineeId" ColumnName="TraineeId" />
+                <ScalarProperty Name="TraineeCode" ColumnName="TraineeCode" />
+                <ScalarProperty Name="TraineeCourseId" ColumnName="TraineeCourseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

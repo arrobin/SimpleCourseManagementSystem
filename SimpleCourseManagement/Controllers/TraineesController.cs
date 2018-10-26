@@ -18,7 +18,7 @@ namespace SimpleCourseManagement.Controllers
         // GET: Trainees
         public ActionResult Index()
         {
-            var trainees = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail);
+            var trainees = db.TraineeCourses.Include(t => t.Trainee).Include(t => t.Batch).Include(t => t.Course).Include(t => t.UserDetail);
             var courseList = db.Courses.ToList();
             ViewBag.Trainees = trainees.ToList();
             ViewBag.Courses = courseList;
@@ -28,7 +28,7 @@ namespace SimpleCourseManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GetTraineesByBatchId(int batchId)
         {
-            var trainees = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Where(t => t.BatchId == batchId);
+            var trainees = db.TraineeCourses.Include(t => t.Trainee).Include(t => t.Batch).Include(t => t.Course).Include(t => t.UserDetail).Where(t=>t.BatchId==batchId);
             var batch = db.Batches.FirstOrDefault(a => a.BatchId == batchId);
             ViewBag.StartDate = batch.StartDate.ToString("yyyy-MM-dd");
             ViewBag.EndDate = batch.EndDate.ToString("yyyy-MM-dd");
@@ -45,7 +45,7 @@ namespace SimpleCourseManagement.Controllers
         }
         public JsonResult GetAllTraineeByBatchId(int batchId)
         {
-            var trainees = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Where(t => t.BatchId == batchId);
+            var trainees = db.TraineeCourses.Include(t => t.Trainee).Include(t => t.Batch).Include(t => t.Course).Include(t => t.UserDetail);
             var batch = db.Batches.FirstOrDefault(a => a.BatchId == batchId);
             ViewBag.StartDate = batch.StartDate;
             ViewBag.EndDate = batch.EndDate;
@@ -60,7 +60,7 @@ namespace SimpleCourseManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Trainee trainee = db.Trainees.Find(id);
+            TraineeCourse trainee = db.TraineeCourses.Find(id);
             if (trainee == null)
             {
                 return HttpNotFound();
@@ -71,10 +71,10 @@ namespace SimpleCourseManagement.Controllers
         // GET: Trainees/Create
         public ActionResult Create()
         {
-            var courseList = db.Courses.ToList();
-            ViewBag.Courses = courseList;
             //ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode");
             ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName");
+            var courseList = db.Courses.ToList();
+            ViewBag.Courses = courseList;
             return View();
         }
 
@@ -83,10 +83,10 @@ namespace SimpleCourseManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TraineeId,TraineeCode,BatchId,TraineeName,TraineeImage,FatherName,MotherName,Gender,Age,Address,ContactNumber,Email,NationalIdCard,Result,UserDetailsId,CreatedDateTime")] Trainee trainee, HttpPostedFileBase file)
+        public ActionResult Create(int? TraineeId,string TraineeName,string TraineeImage,string FatherName,string MotherName,string Gender,string Age, string Address,string ContactNumber, string Email, string NationalIdCard, string TraineeCode, int CourseId, int BatchId, HttpPostedFileBase file)
         {
             //if (ModelState.IsValid)
-            //{
+            //{ TraineeCourseId,TraineeCode,TraineeId,CourseId,BatchId,Result,UserDetailsId
             //    db.Trainees.Add(trainee);
             //    db.SaveChanges();
             //    return RedirectToAction("Index");
@@ -97,8 +97,30 @@ namespace SimpleCourseManagement.Controllers
             //return View(trainee);
             bool Status = false;
             string message = "";
+            var courseList = db.Courses.ToList();
             if (ModelState.IsValid)
             {
+                int totalTraining = db.TraineeCourses.Count(a => a.TraineeId == TraineeId);
+                bool isThisCourseAlreadyDone = db.TraineeCourses.Any(a => a.TraineeId == TraineeId && a.CourseId == CourseId);
+                if (isThisCourseAlreadyDone)
+                {
+                    ViewBag.Required = "This Trainee Already Done This Course";
+                    ViewBag.Courses = courseList;
+                    return View();
+                }
+                if (totalTraining>=3)
+                {
+                    ViewBag.Required = "This Trainee Already Done 3(Three) Courses";
+                    ViewBag.Courses = courseList;
+                    return View();
+                }
+                bool isThisCourseCodeAlreadyHas = db.TraineeCourses.Any(a => a.TraineeCode == TraineeCode);
+                if (isThisCourseCodeAlreadyHas)
+                {
+                    ViewBag.Required = "This Trainee Code Already Given";
+                    ViewBag.Courses = courseList;
+                    return View();
+                }
                 #region Image
                 var path = "";
                 if (file != null)
@@ -114,9 +136,9 @@ namespace SimpleCourseManagement.Controllers
                             if (file.ContentLength > 307200) //300kb
                             {
                                 ViewBag.SizeConflict = true;
-                                var courseList = db.Courses.ToList();
                                 ViewBag.Courses = courseList;
-                                return View(trainee);
+                                ViewBag.Required = "Maximum Picture Size 300 KB!!!";
+                                return View();
                             }
                             string fileName = Path.GetFileNameWithoutExtension(file.FileName);
                             string extention = Path.GetExtension(file.FileName);
@@ -124,64 +146,145 @@ namespace SimpleCourseManagement.Controllers
                             path = "~/Content/TraineeImages/" + fileName;
                             fileName = Path.Combine(Server.MapPath("~/Content/TraineeImages/"), fileName);
                             file.SaveAs(fileName);
-                            trainee.TraineeImage = path;
                             ViewBag.UploadSuccess = true;
                         }
                     }
                     #endregion
 
+                    Trainee aTrainee = new Trainee()
+                    {
+                        TraineeId = TraineeId == null ? 0 : (int)TraineeId,
+                        TraineeName = TraineeName,
+                        TraineeImage = path,
+                        FatherName= FatherName,
+                        MotherName= MotherName,
+                        Gender= Gender,
+                        Age= Convert.ToDouble(Age),
+                        Address= Address,
+                        ContactNumber = ContactNumber,
+                        Email = Email,
+                        NationalIdCard = NationalIdCard,
+                        UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]),
+                        CreatedDateTime = DateTime.Now
+                    };
                     #region Email and NID already Exists or Not! 
 
-                    var isExist = IsEmailExist(trainee.Email);
+                    var isExist = aTrainee.TraineeId>=0?false:IsEmailExist(Email);
                     if (isExist)
                     {
-                        ModelState.AddModelError("EmailExist", "Email already exist");
-                        return View(trainee);
+                        ViewBag.Required = "This Email Already Used";
+                        ViewBag.Courses = courseList;
+                        //ModelState.AddModelError("EmailExist", "Email already exist");
+                        return View();
                     }
 
-                    var NIDExist = IsNIDExist(trainee.NationalIdCard);
+                    var NIDExist = aTrainee.TraineeId >= 0 ? false : IsNIDExist(NationalIdCard);
                     if (NIDExist)
                     {
-                        ModelState.AddModelError("NIDRepeat", "NID already exist");
-                        return View(trainee);
+                        ViewBag.Required = "This National Id Card Already Used";
+                        ViewBag.Courses = courseList;
+                        //ModelState.AddModelError("NIDRepeat", "NID already exist");
+                        return View();
                     }
-
+                    var phoneExist = aTrainee.TraineeId >= 0 ? false : IsPhoneExist(ContactNumber);
+                    if (phoneExist)
+                    {
+                        ViewBag.Required = "This Contact Number Already Used";                        
+                        ViewBag.Courses = courseList;
+                        //ModelState.AddModelError("NIDRepeat", "NID already exist");
+                        return View();
+                    }
+                    TraineeCourse aTraineeCourse = new TraineeCourse()
+                    {
+                        TraineeCode= TraineeCode,
+                        TraineeId = TraineeId==null?0:(int)TraineeId,
+                        CourseId= CourseId,
+                        BatchId= BatchId,
+                        Result = "",
+                        UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]),
+                        CreatedDateTime = DateTime.Now
+                    };
+                    if (aTrainee.TraineeId==0)
+                    {
+                        aTraineeCourse.Trainee = aTrainee;
+                    }
                     #endregion
-                    trainee.Result = "";
-                    trainee.TraineeImage = path;
-                    trainee.CreatedDateTime = DateTime.Now;
-                    trainee.UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]);
-                    db.Trainees.Add(trainee);
+                    db.TraineeCourses.Add(aTraineeCourse);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    ViewBag.Required = "Trainee Saved";
+                    
+                    ViewBag.Courses = courseList;
+                    return View();
                 }
             }
             else
             {
                 message = "Invalid Request";
+                ViewBag.Courses = courseList;
                 return View();
             }
 
             //ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode", trainee.BatchId);
             //ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
-            return View(trainee);
+            return View();
         }
         public JsonResult GetTraineeByCode(string traineeCode)
         {
-            var trainee = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Where(t => t.TraineeCode == traineeCode).FirstOrDefault();
+            var trainee = db.TraineeCourses.Include(t => t.Trainee).Include(t => t.Batch).Include(t => t.Course).Include(t => t.UserDetail).Where(t => t.TraineeCode == traineeCode).FirstOrDefault();
+            if (trainee != null)
+            {
+                var result = new
+                {
+                    TraineeCourseId = trainee.TraineeCourseId,
+                    TraineeName = trainee.Trainee.TraineeName,
+                    CourseName = trainee.Course.CourseName,
+                    BatchCode = trainee.Batch.BatchCode,
+                    TraineeImage = trainee.Trainee.TraineeImage,
+                    FatherName = trainee.Trainee.FatherName,
+                    MotherName = trainee.Trainee.MotherName,
+                    ContactNumber = trainee.Trainee.ContactNumber,
+                    Email = trainee.Trainee.Email,
+                    NationalIdCard = trainee.Trainee.NationalIdCard,
+                    Result = trainee.Result,
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var result = new
+                {
+                    TraineeCourseId = 0,
+                    TraineeName = "",
+                    CourseName = "",
+                    BatchCode = "",
+                    TraineeImage = "",
+                    FatherName = "",
+                    MotherName = "",
+                    ContactNumber = "",
+                    Email = "",
+                    NationalIdCard = "",
+                    Result = "",
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetTraineeByPhone(string phone)
+        {
+            var trainee = db.Trainees.Include(t => t.UserDetail).Where(t => t.ContactNumber == phone).FirstOrDefault();
             if (trainee != null)
             {
                 var result = new
                 {
                     TraineeId = trainee.TraineeId,
                     TraineeName = trainee.TraineeName,
-                    TraineeImage = trainee.TraineeImage,
                     FatherName = trainee.FatherName,
                     MotherName = trainee.MotherName,
                     ContactNumber = trainee.ContactNumber,
                     Email = trainee.Email,
+                    Age = trainee.Age,
+                    Gender = trainee.Gender,
+                    Address = trainee.Address,
                     NationalIdCard = trainee.NationalIdCard,
-                    Result = trainee.Result,
                 };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -196,8 +299,10 @@ namespace SimpleCourseManagement.Controllers
                     MotherName = "",
                     ContactNumber = "",
                     Email = "",
+                    Age = "",
+                    Gender = "",
+                    Address = "",
                     NationalIdCard = "",
-                    Result = "",
                 };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -205,36 +310,66 @@ namespace SimpleCourseManagement.Controllers
         [HttpGet]
         public ActionResult AddResult()
         {
-            Trainee Trainee = new Trainee();
-            //ViewBag.Trainee = Trainee;
-            return View(Trainee);
+            return View();
         }
         [HttpPost]
-        public string AddResult(string result, int traineeId)
+        [ValidateAntiForgeryToken]
+        public ActionResult AddResult(TraineeCourse aTraineeCourse)
         {
             if (ModelState.IsValid)
             {
-                if (string.IsNullOrEmpty(result))
+                if (string.IsNullOrEmpty(aTraineeCourse.Result))
                 {
                     ViewBag.Result = "Result is Required!!!";                    
-                    return ViewBag.Result;
+                    return View();
                 }
-                if (traineeId==0)
+                if (aTraineeCourse.TraineeCourseId == 0)
                 {
                     ViewBag.Result = "Please Search a Valid Trainee";
-                    return ViewBag.Result;
+                    return View();
                 }
-                var trainee = db.Trainees.FirstOrDefault(a => a.TraineeId == traineeId);
-                trainee.Result = result;
-                db.Entry(trainee).State = EntityState.Modified;
+                var traineeCourse = db.TraineeCourses.FirstOrDefault(a => a.TraineeCourseId == aTraineeCourse.TraineeCourseId);
+                traineeCourse.Result = aTraineeCourse.Result;
+                db.Entry(traineeCourse).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.Result = "Result Saved";
-                return ViewBag.Result;
+                return View();
             }
             ViewBag.Result = "Result Not Saved";
-            return ViewBag.Result;
+            return View();
         }
-                
+        [HttpGet]
+        public ActionResult ResultAdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResultAdd(TraineeCourse aTraineeCourse)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(aTraineeCourse.Result))
+                {
+                    ViewBag.Result = "Result is Required!!!";
+                    return View();
+                }
+                if (aTraineeCourse.TraineeCourseId == 0)
+                {
+                    ViewBag.Result = "Please Search a Valid Trainee";
+                    return View();
+                }
+                var traineeCourse = db.TraineeCourses.FirstOrDefault(a => a.TraineeCourseId == aTraineeCourse.TraineeCourseId);
+                traineeCourse.Result = aTraineeCourse.Result;
+                db.Entry(traineeCourse).State = EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.Result = "Result Saved";
+                return View();
+            }
+            ViewBag.Result = "Result Not Saved";
+            return View();
+        }
+
         [NonAction]
         public bool IsEmailExist(string emailID)
         {
@@ -247,16 +382,21 @@ namespace SimpleCourseManagement.Controllers
             var v = db.Trainees.Where(a => a.NationalIdCard == nid).FirstOrDefault();
             return v != null;
         }
+        public bool IsPhoneExist(string phone)
+        {
+            var v = db.Trainees.Where(a => a.ContactNumber == phone).FirstOrDefault();
+            return v != null;
+        }
         public ActionResult Certificate(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Trainee trainee = db.Trainees.Include(t => t.Batch).Include(t => t.UserDetail).Include(t => t.Batch.Course).FirstOrDefault(a => a.TraineeId == id);
+            TraineeCourse trainee = db.TraineeCourses.Include(t => t.Trainee).Include(t => t.Batch).Include(t => t.Course).Include(t => t.UserDetail).FirstOrDefault(a => a.TraineeCourseId == id);
             if (trainee == null)
             {
-                return HttpNotFound();
+                return View("Index");
             }
             return View(trainee);
         }

@@ -35,7 +35,7 @@ namespace SimpleCourseManagement.Controllers
             var courseList = db.Courses.ToList();
             foreach(var course in courseList)
             {
-                int totalTrainee = db.Trainees.Count(a => a.Batch.CourseId == course.CourseId);
+                int totalTrainee = db.TraineeCourses.Count(a => a.Batch.CourseId == course.CourseId);
                 chartData.Add(new object[]
                     {
                         course.CourseCode, totalTrainee

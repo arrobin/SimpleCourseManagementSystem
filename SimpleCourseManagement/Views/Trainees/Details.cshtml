@@ -1,4 +1,4 @@
-﻿@model SimpleCourseManagement.Models.Trainee
+﻿@model SimpleCourseManagement.Models.TraineeCourse
 
 @{
     if (Session["UserDetailsId"] == null)
@@ -18,7 +18,7 @@
         </div>
         <div class="panel-body">
             <fieldset>
-                <img style="padding-left:100px;" src="@Url.Content(Model.TraineeImage)" width="250" height="150"/>
+                <img style="padding-left:100px;" src="@Url.Content(Model.Trainee.TraineeImage)" width="250" height="150"/>
                 <br /><br />
                 <dl class="dl-horizontal">
                     <dt>
@@ -36,7 +36,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.TraineeName)
+                        @Html.DisplayFor(model => model.Trainee.TraineeName)
                     </dd>
                     
                     @*<dt>
@@ -53,7 +53,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.FatherName)
+                        @Html.DisplayFor(model => model.Trainee.FatherName)
                     </dd>
 
                     <dt>
@@ -62,7 +62,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.MotherName)
+                        @Html.DisplayFor(model => model.Trainee.MotherName)
                     </dd>
 
                     <dt>
@@ -71,7 +71,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Gender)
+                        @Html.DisplayFor(model => model.Trainee.Gender)
                     </dd>
 
                     <dt>
@@ -80,7 +80,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Age)
+                        @Html.DisplayFor(model => model.Trainee.Age)
                     </dd>
 
                     <dt>
@@ -89,7 +89,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Address)
+                        @Html.DisplayFor(model => model.Trainee.Address)
                     </dd>
 
                     <dt>
@@ -98,7 +98,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.ContactNumber)
+                        @Html.DisplayFor(model => model.Trainee.ContactNumber)
                     </dd>
 
                     <dt>
@@ -107,7 +107,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Email)
+                        @Html.DisplayFor(model => model.Trainee.Email)
                     </dd>
 
                     <dt>
@@ -116,7 +116,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.NationalIdCard)
+                        @Html.DisplayFor(model => model.Trainee.NationalIdCard)
                     </dd>
 
                     <dt>

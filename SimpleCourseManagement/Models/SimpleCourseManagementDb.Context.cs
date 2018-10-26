@@ -31,5 +31,6 @@ namespace SimpleCourseManagement.Models
         public virtual DbSet<Trainee> Trainees { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<TraineeCourse> TraineeCourses { get; set; }
     }
 }

@@ -78,8 +78,12 @@
                     traditional: true,
                     success: function (data) {
                         if (data != null) {
-                            $('#TraineeId').val(data.TraineeId);
+                            $('#CourseId').val(data.CourseId);
+                            $('#BatchId').val(data.BatchId);
+                            $('#TraineeCourseId').val(data.TraineeCourseId);
                             $('#TraineeName').val(data.TraineeName);
+                            $('#CourseName').val(data.CourseName);
+                            $('#BatchCode').val(data.BatchCode);
                             $('#FatherName').val(data.FatherName);
                             $('#MotherName').val(data.MotherName);
                             $('#ContactNumber').val(data.ContactNumber);
@@ -87,7 +91,6 @@
                             $('#NationalIdCard').val(data.NationalIdCard);
                             $('#Result').val(data.Result);
                             var imagePath = data.TraineeImage.substring(data.TraineeImage.indexOf("~") + 1, data.TraineeImage.length);
-                            console.log(imagePath);
                             $('#trainee_image').attr('src', imagePath);
                         } else {
                             alert("Something went wrong");
@@ -97,7 +100,35 @@
             });
         });
     </script>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#traineeSearchByPhone').click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/Trainees/GetTraineeByPhone",
+                    data: { phone: $('#phone').val() },
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        if (data != null) {
+                            $('#TraineeId').val(data.TraineeId);
+                            $('#TraineeName').val(data.TraineeName);
+                            $('#FatherName').val(data.FatherName);
+                            $('#MotherName').val(data.MotherName);
+                            $('#ContactNumber').val(data.ContactNumber);
+                            $('#Email').val(data.Email);
+                            $('#Age').val(data.Age);
+                            $('#Address').val(data.Address);
+                            $('#NationalIdCard').val(data.NationalIdCard);
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
     <script>
            $(document).ready(function () {

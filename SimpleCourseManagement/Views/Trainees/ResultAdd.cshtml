@@ -1,4 +1,4 @@
-﻿@model SimpleCourseManagement.Models.Trainee
+﻿@model SimpleCourseManagement.Models.TraineeCourse
 
 @{
     if (Session["UserDetailsId"] == null)
@@ -12,15 +12,17 @@
     ViewBag.Title = "Result Add";
 }
 
-<form action=@Url.Action("AddResult", "Trainees") method="post" class="form-element">
+@using (Html.BeginForm("ResultAdd", "Trainees", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{
     @Html.AntiForgeryToken()
+
     <div class="col-md-10">
         <div class="col-md-12 panel-info">
             <div class="content-box-header panel-heading">
                 <div class="panel-title ">Trainee Search Options</div>
                 <label style="color:red" class="field-validation-error">@ViewBag.Result</label>
             </div>
-            <input id="TraineeId" name="TraineeId" type="hidden" value="">
+            <input id="TraineeCourseId" name="TraineeCourseId" type="hidden" value="">
             <div class="content-box-large box-with-header">
                 <div>
                     <div class="row">
@@ -31,8 +33,8 @@
                         <div class="col-sm-4">
                             <br />
                             @*<button type="submit" class="btn btn-primary">
-                                Search
-                            </button>*@
+                                    Search
+                                </button>*@
                             <input type="button" class="btn btn-primary" id="traineeSearchButton" value="Search" />
                         </div>
                     </div>
@@ -48,35 +50,35 @@
                         </div>
                         <div class="form-group">
                             <label>Course Name</label>
-                            <input name="CourseName" id="CourseName" class="form-control" placeholder="" type="text" value="@Model.TraineeName" readonly="readonly">
+                            <input name="CourseName" id="CourseName" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>BatchCode</label>
-                            <input name="BatchCode" id="BatchCode" class="form-control" placeholder="" type="text" value="@Model.FatherName" readonly="readonly">
+                            <input name="BatchCode" id="BatchCode" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>Trainee Name</label>
-                            <input name="TraineeName" id="TraineeName" class="form-control" placeholder="" type="text" value="@Model.TraineeName" readonly="readonly">
+                            <input name="TraineeName" id="TraineeName" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>Father Name</label>
-                            <input name="FatherName" id="FatherName" class="form-control" placeholder="" type="text" value="@Model.FatherName" readonly="readonly">
+                            <input name="FatherName" id="FatherName" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>Mother Name</label>
-                            <input name="MotherName" id="MotherName" class="form-control" placeholder="" type="text" value="@Model.MotherName" readonly="readonly">
+                            <input name="MotherName" id="MotherName" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>Phone</label>
-                            <input name="ContactNumber" id="ContactNumber" class="form-control" placeholder="" type="text" value="@Model.ContactNumber" readonly="readonly">
+                            <input name="ContactNumber" id="ContactNumber" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input name="Email" id="Email" class="form-control" placeholder="" type="text" value="@Model.Email" readonly="readonly">
+                            <input name="Email" id="Email" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>National ID Card</label>
-                            <input name="NationalIdCard" id="NationalIdCard" class="form-control" placeholder="" type="text" value="@Model.NationalIdCard" readonly="readonly">
+                            <input name="NationalIdCard" id="NationalIdCard" class="form-control" placeholder="" type="text" value="" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>Result</label>
@@ -93,5 +95,4 @@
             </div>
         </div>
     </div>
-</form>
-
+}

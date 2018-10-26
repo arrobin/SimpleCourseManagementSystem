@@ -17,7 +17,7 @@ namespace SimpleCourseManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Batch()
         {
-            this.Trainees = new HashSet<Trainee>();
+            this.TraineeCourses = new HashSet<TraineeCourse>();
         }
     
         public int BatchId { get; set; }
@@ -38,6 +38,6 @@ namespace SimpleCourseManagement.Models
         public virtual Course Course { get; set; }
         public virtual UserDetail UserDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Trainee> Trainees { get; set; }
+        public virtual ICollection<TraineeCourse> TraineeCourses { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace SimpleCourseManagement.Models
             this.Batches = new HashSet<Batch>();
             this.Courses = new HashSet<Course>();
             this.Trainees = new HashSet<Trainee>();
+            this.TraineeCourses = new HashSet<TraineeCourse>();
         }
     
         public int UserDetailsId { get; set; }
@@ -36,5 +37,7 @@ namespace SimpleCourseManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trainee> Trainees { get; set; }
         public virtual UserRole UserRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TraineeCourse> TraineeCourses { get; set; }
     }
 }

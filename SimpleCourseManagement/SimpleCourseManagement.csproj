@@ -250,6 +250,9 @@
     <Compile Include="Models\Trainee.cs">
       <DependentUpon>SimpleCourseManagementDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TraineeCourse.cs">
+      <DependentUpon>SimpleCourseManagementDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserDetail.cs">
       <DependentUpon>SimpleCourseManagementDb.tt</DependentUpon>
     </Compile>
@@ -1758,6 +1761,7 @@
     <Content Include="Views\Trainees\Index.cshtml" />
     <Content Include="Views\Trainees\Certificate.cshtml" />
     <Content Include="Views\Trainees\AddResult.cshtml" />
+    <Content Include="Views\Trainees\ResultAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

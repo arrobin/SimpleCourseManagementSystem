@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SimpleCourseManagement.Models.Trainee>
+﻿@model IEnumerable<SimpleCourseManagement.Models.TraineeCourse>
 
 @{
     if (Session["UserDetailsId"] == null)
@@ -17,11 +17,6 @@
         <div class="col-md-12 panel-info">
             <div class="content-box-header panel-heading">
                 <div class="panel-title ">Search Options</div>
-
-                <div class="panel-options">
-                    <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-                    <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-                </div>
             </div>
             <div class="content-box-large box-with-header">
                 <div>
@@ -109,14 +104,14 @@
                             @foreach (var item in ViewBag.Trainees)
                             {
                                 <tr class="odd gradeX">
-                                    <td class="">@item.TraineeName</td>
+                                    <td class="">@item.Trainee.TraineeName</td>
                                     <td class="">@item.TraineeCode</td>
-                                    <td class="">@item.ContactNumber</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.NationalIdCard</td>
+                                    <td class="">@item.Trainee.ContactNumber</td>
+                                    <td>@item.Trainee.Email</td>
+                                    <td>@item.Trainee.NationalIdCard</td>
                                     <td>@item.Result</td>
-                                    <td><a class="btn btn-primary btn-sm" href=@Url.Action("Details","Trainees",new { id = item.TraineeId })>Details</a></td>
-                                    <td><a class="btn btn-primary btn-sm" href=@Url.Action("Certificate", "Trainees", new { id = item.TraineeId })>Certificate</a></td>
+                                    <td><a class="btn btn-primary btn-sm" href=@Url.Action("Details","Trainees",new { id = item.TraineeCourseId })>Details</a></td>
+                                    <td><a class="btn btn-primary btn-sm" href=@Url.Action("Certificate", "Trainees", new { id = item.TraineeCourseId })>Certificate</a></td>
                                 </tr>
                             }
                         </tbody>
@@ -126,111 +121,3 @@
         </div>
     </div>
 </form>
-
-@*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TraineeCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TraineeName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TraineeImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FatherName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MotherName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContactNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NationalIdCard)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Result)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Batch.BatchCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserDetail.UserName)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TraineeCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TraineeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TraineeImage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FatherName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MotherName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NationalIdCard)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Result)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Batch.BatchCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserDetail.UserName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.TraineeId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.TraineeId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.TraineeId })
-                </td>
-            </tr>
-        }
-
-    </table>*@
