@@ -83,7 +83,7 @@ namespace SimpleCourseManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int? TraineeId,string TraineeName,string TraineeImage,string FatherName,string MotherName,string Gender,string Age, string Address,string ContactNumber, string Email, string NationalIdCard, string TraineeCode, int CourseId, int BatchId, HttpPostedFileBase file)
+        public ActionResult Create(int? TraineeId,string TraineeName,string TraineeImage,string FatherName,string MotherName,string Gender,string Age, string Address,string ContactNumber, string Email, string NationalIdCard, string TraineeCode, int? CourseId, int? BatchId, HttpPostedFileBase file)
         {
             //if (ModelState.IsValid)
             //{ TraineeCourseId,TraineeCode,TraineeId,CourseId,BatchId,Result,UserDetailsId
@@ -102,6 +102,18 @@ namespace SimpleCourseManagement.Controllers
             {
                 int totalTraining = db.TraineeCourses.Count(a => a.TraineeId == TraineeId);
                 bool isThisCourseAlreadyDone = db.TraineeCourses.Any(a => a.TraineeId == TraineeId && a.CourseId == CourseId);
+                if (CourseId==null)
+                {
+                    ViewBag.Required = "PLease Select a Course";
+                    ViewBag.Courses = courseList;
+                    return View();
+                }
+                if (BatchId == null)
+                {
+                    ViewBag.Required = "PLease Select a Batch";
+                    ViewBag.Courses = courseList;
+                    return View();
+                }
                 if (isThisCourseAlreadyDone)
                 {
                     ViewBag.Required = "This Trainee Already Done This Course";
@@ -198,8 +210,8 @@ namespace SimpleCourseManagement.Controllers
                     {
                         TraineeCode= TraineeCode,
                         TraineeId = TraineeId==null?0:(int)TraineeId,
-                        CourseId= CourseId,
-                        BatchId= BatchId,
+                        CourseId= CourseId == null ? 0 : (int)CourseId,
+                        BatchId= BatchId == null ? 0 : (int)BatchId,
                         Result = "",
                         UserDetailsId = Convert.ToInt32(Session["UserDetailsId"]),
                         CreatedDateTime = DateTime.Now
@@ -226,6 +238,8 @@ namespace SimpleCourseManagement.Controllers
 
             //ViewBag.BatchId = new SelectList(db.Batches, "BatchId", "BatchCode", trainee.BatchId);
             //ViewBag.UserDetailsId = new SelectList(db.UserDetails, "UserDetailsId", "UserName", trainee.UserDetailsId);
+            ViewBag.Required = "Please Provide All Information";
+            ViewBag.Courses = courseList;
             return View();
         }
         public JsonResult GetTraineeByCode(string traineeCode)
